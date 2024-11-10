@@ -18,6 +18,7 @@ Một website quản lý công việc trực tuyến được xây dựng theo m
 2. **Cài đặt các phụ thuộc**: `npm install` sẽ cài đặt các thư viện cần thiết mà dự án của bạn sử dụng.
 3. **Cấu hình `.env`**: Bạn cần tạo một tệp `.env` để cấu hình các thông số như kết nối đến cơ sở dữ liệu MongoDB và khóa bí mật cho session.
    
-         git clone https://github.com/quocviet2001/todo_note.git
-4. **Chạy ứng dụng**: `npm start` sẽ khởi động ứng dụng và `npm run watch` sẽ khởi động file css cho ứng dụng.
-5. Truy cập ứng dụng qua trình duyệt tại `http://localhost:3000`.
+         MONGO
+         SECRET
+5. **Chạy ứng dụng**: `npm start` sẽ khởi động ứng dụng và `npm run watch` sẽ khởi động file css cho ứng dụng.
+6. Truy cập ứng dụng qua trình duyệt tại `http://localhost:3000/todo-note`.
