@@ -1,5 +1,5 @@
 const express = require('express');
-const port = 3001;
+const port = 3000;
 const app = express();
 const path = require('path');
 const route = require("./routes");
@@ -9,10 +9,11 @@ const session = require('express-session');
 const db = require('./config/db');
 const sortMiddleware = require('./app/middleware/SortMiddleware');
 const { isLoggedIn } = require('./app/middleware/authenticateSessionMiddleware');
+require('dotenv').config();
 
 //Use session for authentication
 app.use(session({
-    secret: 'vit_charlie_201@#$',
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
     cookie: {
