@@ -1,0 +1,18 @@
+<div class="container mt-4">
+    <h2 class="text-center mb-4">Cập nhật ảnh đại diện</h2>
+    <!-- Avarta-->
+    <div class="text-center mb-4">
+        <img src="{{user.avatar}}" alt="Ảnh đại diện" class="img-fluid rounded-circle border border-dark"
+            style="width: 100px; height: 100px;">
+        <p class="mt-2">{{user.username}}</p>
+    </div>
+    <form action="/me/upload-avarta" method="POST" enctype="multipart/form-data" class="border p-4 rounded shadow-sm">
+        <div class="form-group">
+            <label for="avarta" class="form-label">Chọn ảnh đại diện</label>
+            <input type="file" class="form-control" id="avarta" name="avarta" required>
+        </div>
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary btn-lg">Cập nhật ảnh đại diện</button>
+        </div>
+    </form>
+</div>

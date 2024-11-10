@@ -1,0 +1,47 @@
+<div class="mt-4">
+
+    <h3>Chỉnh sửa nhiệm vụ</h3>
+
+    <form method="POST" action="/tasks/{{task._id}}/update?_method=PUT">
+        <div class="form-group">
+            <label for="title">Tiêu đề</label>
+            <input type="text" class="form-control" value="{{task.title}}" id="title" name="title">
+        </div>
+        <div class="form-group">
+            <label for="description">Mô tả</label>
+            <textarea class="form-control" id="description" name="description">{{task.description}}</textarea>
+        </div>
+        <div class="form-group">
+            <label for="priority">Mức độ ưu tiên</label>
+            <select class="custom-select custom-select-sm" id="priority" name="priority" required>
+                <option value="3" {{#if (equal task.priority "3" )}}selected{{/if}}>Cao</option>
+                <option value="2" {{#if (equal task.priority "2" )}}selected{{/if}}>Vừa</option>
+                <option value="1" {{#if (equal task.priority "1" )}}selected{{/if}}>Thấp</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="tagId">Phân loại danh mục</label>
+            <select class="custom-select custom-select-sm select-tag" id="tagId" name="tagId" required>
+                {{#each tags}}
+                <option value="{{this._id}}" {{#if (eq this._id ../task.tagId._id)}}selected{{/if}}>{{this.category}}</option>
+                {{/each}}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="dueDate">Ngày tới hạn</label>
+            <input type="text" class="form-control" value="{{formatDate task.dueDate}}" id="dueDate" name="dueDate">
+        </div>
+        <button type="submit" class="btn btn-primary">Lưu</button>
+    </form>
+
+</div>
+
+{{!-- Lịch --}}
+<script>
+    flatpickr("#dueDate", {
+        enableTime: true,
+        dateFormat: "H:i d-m-Y",
+        minDate: "today",
+        time_24hr: true
+    });
+</script>

@@ -1,0 +1,40 @@
+<div class="container mt-4">
+
+    <div class="text-center mb-4">
+        <h1>{{task.title}}</h1>
+        {{#unless task.isCompleted}}
+        <div class="alert alert-warning" role="alert">
+            <strong>Hạn hoàn thành:</strong> {{formatDate task.dueDate}}
+        </div>
+        {{/unless}}
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h5 class="card-title">Chi tiết</h5>
+            <p class="card-text"><strong>Mô tả:</strong> {{task.description}}</p>
+            <p class="card-text"><strong>Độ ưu tiên:</strong> <span
+                    class="badge {{getPriorityClass task.priority}}">{{convertPriority
+                    task.priority}}</span></p>
+            <p class="card-text"><strong>Danh mục:</strong> {{task.tagId.category}}</p>
+            {{#if task.isCompleted}}
+            <p class="card-text"><strong>Trạng thái:</strong> <span class="badge badge-success">{{task.status}}</span>
+            </p>
+            {{else}}
+            <p class="card-text"><strong>Trạng thái:</strong> <span class="badge badge-warning">{{task.status}}</span>
+            </p>
+            {{/if}}
+            <p class="card-text"><strong>Thời gian tạo:</strong> {{formatDate task.createdAt}}</p>
+            {{#if task.isCompleted}}
+            <p class="card-text"><strong>Thời gian hoàn thành:</strong> {{formatDate task.completedAt}}</p>
+            {{/if}}
+        </div>
+    </div>
+
+    {{#unless task.isCompleted}}
+    <div class="d-flex justify-content-end mt-3">
+        <a href="/tasks/{{task._id}}/edit" class="btn btn-primary mr-2">Sửa</a>
+    </div>
+    {{/unless}}
+
+</div>

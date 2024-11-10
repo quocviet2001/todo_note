@@ -1,0 +1,59 @@
+<div class="mt-4">
+    <h3>Danh mục nhiệm vụ</h3>
+    <div class="tags-container">
+        {{!-- Bảng thống kê --}}
+        <table class="table table-tags mt-3">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">#</th>
+                    <th class="tag-name" scope="col">Tên danh mục</th>
+                    <th scope="col">Tổng số nhiệm vụ</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each tags}}
+                <tr>
+                    <th scope="row">{{sum @index 1}}</th>
+                    <td>
+                        <a href="/me/tags/{{this._id}}" style="color: black;">
+                            {{this.category}}
+                        </a>
+                    </td>
+                    <td style="text-align: center;">{{this.taskCount}}</td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+
+        {{#if (equal role 'Admin')}}
+        {{!-- Tạo danh mục --}}
+        <div class="create-category mt-4">
+            <div class="text-center mb-3">
+                <button class="btn btn-info" type="button" data-toggle="collapse" data-target="#addCategoryForm"
+                    aria-expanded="false" aria-controls="addCategoryForm">
+                    Tạo danh mục
+                </button>
+            </div>
+            <div class="collapse" id="addCategoryForm">
+                <div class="card p-4 shadow">
+                    <form action="/admin/tag-create" method="POST">
+                        <div class="form-group">
+                            <label for="category" class="font-weight-bold">Tên danh mục:</label>
+                            <input type="text" id="category" name="category" class="form-control"
+                                placeholder="Nhập tên danh mục bạn muốn tạo" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">Thêm danh mục</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        {{/if}}
+    </div>
+    {{!-- Thống kê tất cả nhiệm vụ --}}
+    <div class="mt-3 p-2 alert alert-secondary all-tag">
+        <strong class="text-dark">Tất cả:</strong>
+        <a href="/me/mylist" class="text-dark fw-semibold text-decoration-none">
+            {{taskCount}} nhiệm vụ
+        </a>
+    </div>
+</div>

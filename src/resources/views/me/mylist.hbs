@@ -1,0 +1,269 @@
+<form name="container-form" class="mt-4" method="POST" action="/tasks/handle-action">
+    {{#if page}}
+    <h3>{{page}}</h3>
+    {{/if}}
+    {{#if (equal page "Danh sách tất cả nhiệm vụ")}}
+    <a href="/me/trash-task" class="btn btn-secondary btn-sm">Thùng rác({{deletedCount}})</a>
+    {{/if}}
+    {{#unless hide}}
+    <a href="/tasks/create" class="btn btn-info btn-sm">Thêm nhiệm vụ</a>
+    {{/unless}}
+    <div class="mt-4 d-flex align-items-center">
+        <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="checkbox-all">
+            <label class="form-check-label" for="checkbox-all">Chọn tất cả</label>
+        </div>
+        <select class="custom-select custom-select-sm select-all-options" name="action" required>
+            <option value="">Chọn hành động</option>
+            <option value="delete">Xóa</option>
+            {{#if historyTask}}
+            <option value="undo">Hoàn tác</option>
+            {{else}}
+            <option value="complete">Hoàn thành</option>
+            {{/if}}
+        </select>
+        <button class="btn btn-primary btn-sm checked-submit-btn" disabled>Thực hiện</button>
+    </div>
+
+    <table class="table mt-4">
+        <thead class="thead-light">
+            <tr>
+                <th>#</th>
+                <th scope="col">STT</th>
+                <th scope="col">Tiêu đề
+                    {{#unless search}}
+                    {{{sortable 'title' _sort}}}
+                    {{/unless}}
+                </th>
+                <th scope="col">Danh mục
+                    {{#unless search}}
+                    {{{sortable 'tagId' _sort}}}
+                    {{/unless}}
+                </th>
+                <th scope="col">Độ ưu tiên
+                    {{#unless search}}
+                    {{{sortable 'priority' _sort}}}
+                    {{/unless}}
+                </th>
+                {{#if historyTask}}
+                <th scope="col">Thời gian tạo
+                </th>
+                <th scope="col" style="width: 180px;">
+                    Thời gian hoàn thành
+                    {{{sortable 'completedAt' _sort}}}
+                </th>
+                {{else}}
+                <th scope="col">Hạn hoàn thành
+                    {{{sortable 'dueDate' _sort}}}
+                </th>
+                {{/if}}
+                <th scope="col">Trạng thái</th>
+                <th scope="col" colspan="3">Tùy chọn</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each tasks}}
+            <tr>
+                <td>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" name="tasksIds[]" value="{{this._id}}">
+                </td>
+                <th scope="row">{{sum @index 1}}</th>
+                <td>
+                    <a href="/tasks/{{this.slug}}" style="color: black;">
+                        {{this.title}}
+                    </a>
+                </td>
+                <td>{{this.tagId.category}}</td>
+                <td>{{convertPriority this.priority}}</td>
+                {{#if ../historyTask}}
+                <td>{{formatDate this.createdAt}}</td>
+                <td>{{formatDate this.completedAt}}</td>
+                {{else}}
+                <td>{{formatDate this.dueDate}}</td>
+                {{/if}}
+                <td>{{this.status}}</td>
+                {{#if ../historyTask}}
+                <td>
+                    <a href="" class="btn btn-success btn-undo-task" data-id={{this._id}}>Hoàn tác</a>
+                </td>
+                {{else}}
+                <td>
+                    <a href="" class="btn btn-success" data-toggle="modal" data-id={{this._id}}
+                        data-target="#complete-task-modal">Hoàn thành</a>
+                </td>
+                <td>
+                    <a href="/tasks/{{this._id}}/edit" class="btn btn-primary">Sửa</a>
+                </td>
+                {{/if}}
+                <td>
+                    <a href="" class="btn btn-danger" data-toggle="modal" data-id={{this._id}}
+                        data-target="#delete-task-modal">Xóa</a>
+                </td>
+            </tr>
+            {{else}}
+            <tr>
+                {{#if historyTask}}
+                <td colspan="9" class="text-center">
+                    Lịch sử trống.
+                </td>
+                {{else}}
+                <td colspan="9" class="text-center">
+                    Danh sách nhiệm vụ trống.
+                    <a href="/tasks/create">Thêm nhiệm vụ</a>
+                </td>
+                {{/if}}
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+
+    <!-- Phân trang -->
+    {{#if (gt totalPages 1)}}
+    <nav aria-label="Page navigation" class="mt-4">
+        <ul class="pagination justify-content-center">
+            {{#if (gt currentPage 1)}}
+            <li class="page-item">
+                <a class="page-link" href="?page={{subtract currentPage 1}}" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            {{/if}}
+
+            {{#each (range 1 totalPages)}}
+            <li class="page-item {{#if (equal this ../currentPage)}}active{{/if}}">
+                <a class="page-link" href="?page={{this}}">{{this}}</a>
+            </li>
+            {{/each}}
+
+            {{#if (lt currentPage totalPages)}}
+            <li class="page-item">
+                <a class="page-link" href="?page={{add currentPage 1}}" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+            {{/if}}
+        </ul>
+    </nav>
+    {{/if}}
+
+</form>
+
+{{!-- Confirm Delete --}}
+<div id="delete-task-modal" class="modal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Xóa nhiệm vụ</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Bạn có chắn chắn muốn xóa không ?</p>
+            </div>
+            <div class="modal-footer">
+                <button id="btn-delete-task" type="button" class="btn btn-danger">Xóa bỏ</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{!-- Confirm Complte --}}
+<div id="complete-task-modal" class="modal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Hoàn thành nhiệm vụ</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Xác nhận đã hoàn thành nhiệm vụ ?</p>
+            </div>
+            <div class="modal-footer">
+                <button id="btn-complete-task" type="button" class="btn btn-success">Xác nhận</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{!-- Delete-form --}}
+<form name="delete-form" method="POST"></form>
+{{!-- Complete-form --}}
+<form name="complete-form" method="POST"></form>
+{{!-- Undo-form --}}
+<form name="undo-form" method="POST"></form>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var taskId;
+        var deleteForm = document.forms['delete-form'];
+        var btnDeleteTask = document.getElementById('btn-delete-task');
+        var completeForm = document.forms['complete-form'];
+        var btnCompleteTask = document.getElementById('btn-complete-task');
+        var undoForm = document.forms['undo-form'];
+        var btnUndoTask = $('.btn-undo-task');
+        var checkboxAll = $('#checkbox-all');
+        var taskItemCheckbox = $('input[name="tasksIds[]"]');
+        var checkedSubmitBtn = $('.checked-submit-btn');
+
+        //When delete click
+        $('#delete-task-modal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            taskId = button.data('id');
+        });
+
+        //When delete-btn confirm click
+        btnDeleteTask.onclick = function () {
+            deleteForm.action = '/tasks/' + taskId + '?_method=DELETE';
+            deleteForm.submit();
+        };
+
+        //When complete click
+        $('#complete-task-modal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            taskId = button.data('id');
+        });
+
+        //When complete-btn comfirm click
+        btnCompleteTask.onclick = function () {
+            completeForm.action = '/tasks/' + taskId + '/completed?_method=PATCH';
+            completeForm.submit();
+        };
+
+        //When undo-btn click
+        btnUndoTask.click(function (e) {
+            e.preventDefault();
+            var taskId = $(this).data('id');
+            undoForm.action = '/tasks/' + taskId + '/undo?_method=PATCH';
+            undoForm.submit();
+        });
+
+        //When checkbox all change
+        checkboxAll.change(function () {
+            var isCheckedAll = $(this).prop('checked');
+            taskItemCheckbox.prop('checked', isCheckedAll);
+            renderCheckAllSubmitBtn();
+        });
+
+        //When check item change
+        taskItemCheckbox.change(function () {
+            var isCheckedAll = taskItemCheckbox.length === $('input[name="tasksIds[]"]:checked').length;
+            checkboxAll.prop('checked', isCheckedAll);
+            renderCheckAllSubmitBtn();
+        });
+
+        function renderCheckAllSubmitBtn() {
+            var checkedCount = $('input[name="tasksIds[]"]:checked').length;
+            if (checkedCount) {
+                checkedSubmitBtn.attr('disabled', false);
+            } else {
+                checkedSubmitBtn.attr('disabled', true);
+            }
+        };
+    });
+</script>

@@ -1,0 +1,77 @@
+<div class="container mt-4">
+    <h3 class="text-center mb-4">Quản Lý Tài Khoản</h3>
+
+    <!-- Avarta-->
+    <div class="text-center mb-4">
+        <img src="{{user.avatar}}" alt="Ảnh đại diện" class="img-fluid rounded-circle border border-dark"
+            style="width: 100px; height: 100px;">
+        <p class="mt-2">{{user.username}}</p>
+    </div>
+
+    <div id="accountAccordion" class="w-60">
+        <!-- Thông Tin Cá Nhân -->
+        <div class="card">
+            <div class="card-header bg-light text-dark" id="personalInfoHeader">
+                <h5 class="mb-0">
+                    <button class="btn btn-link text-dark" data-toggle="collapse" data-target="#personalInfo"
+                        aria-expanded="true" aria-controls="personalInfo">
+                        Thông Tin Cá Nhân
+                    </button>
+                </h5>
+            </div>
+            {{#if mess}}
+            <div class="alert alert-success">{{mess}}</div>
+            {{/if}}
+            <div id="personalInfo" class="collapse show" aria-labelledby="personalInfoHeader"
+                data-parent="#accountAccordion">
+                <div class="card-body">
+                    <form method="POST" action="/me/profile-update">
+                        <div class="form-group">
+                            <label for="username">Tên</label>
+                            <input type="text" class="form-control" id="username" name="username"
+                                placeholder="Nhập tên tài khoản" value="{{user.username}}">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" class="form-control" id="email" name="email" placeholder="Nhập email"
+                                value="{{user.email}}">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Cập nhật thông tin</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- Thay Đổi Mật Khẩu -->
+        <div class="card">
+            <div class="card-header bg-light text-dark" id="passwordChangeHeader">
+                <h5 class="mb-0">
+                    <a class="btn btn-link text-dark" href="/me/profile-password">
+                        Thay Đổi Mật Khẩu
+                    </a>
+                </h5>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header bg-light text-dark" id="avartaChangeHeader">
+                <h5 class="mb-0">
+                    <a class="btn btn-link text-dark" href="/me/profile-avarta">
+                        Thay Đổi Ảnh Đại Diện
+                    </a>
+                </h5>
+            </div>
+        </div>
+        <!-- Nút Đăng Xuất -->
+        <div class="card">
+            <div class="card-header bg-light text-dark" id="logoutHeader">
+                <h5 class="mb-0">
+                    <a class="btn btn-link text-dark" href=""
+                        onclick="document.getElementById('logoutForm').submit();">
+                        Đăng Xuất
+                    </a>
+                </h5>
+            </div>
+            <!-- Form đăng xuất ẩn -->
+            <form id="logoutForm" method="POST" action="/auth/logout?_method=POST" style="display: none;"></form>
+        </div>
+    </div>
+</div>

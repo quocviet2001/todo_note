@@ -1,0 +1,90 @@
+@import 'variables';
+
+h1 {
+    color: $black-color;
+}
+
+h2 {
+    color: $title-color;
+}
+
+h3 {
+    color: $title-color;
+}
+
+.select-all-options {
+    width: 145px;
+    margin: 0 16px;
+}
+
+// css page tags
+.tags-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.create-category {
+    width: 40%;
+    margin-left: 20px;
+}
+
+.table-tags,
+.all-tag {
+    width: 60%;
+    margin-left: 0;
+}
+
+//Css create button
+.circle-button {
+    margin-left: 10px;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background-color: #4ab9f4;
+    color: white;
+    font-size: 20px;
+    border: none;
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.circle-button:hover {
+    background-color: #4a8cf5;
+}
+
+// Css dropdown-user
+.dropdown {
+    display: flex;
+    align-items: center;
+}
+
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 8px;
+}
+
+.w-60 {
+    width: 60%;
+    margin: 0 auto;
+}
+
+.btn-success {
+    display: inline-block;
+    width: 110px; /* Đặt chiều rộng cố định */
+    text-align: center; /* Căn giữa văn bản bên trong */
+}
+
+// Css table
+th {
+    text-align: center;
+    vertical-align: middle;
+}
+
+td {
+    text-align: center;
+    vertical-align: middle;
+}

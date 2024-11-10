@@ -1,0 +1,146 @@
+{{#if isLoggedIn}}
+<div class="mt-4">
+    <h2>Nhiệm vụ mới nhất</h3>
+    <table class="table mt-4">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col">STT</th>
+                <th scope="col">Tiêu đề
+                </th>
+                <th scope="col">Danh mục
+                </th>
+                <th scope="col">Độ ưu tiên
+                </th>
+                <th scope="col">Hạn hoàn thành</th>
+                <th scope="col">Trạng thái</th>
+                <th scope="col" colspan="3">Tùy chọn</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each tasks}}
+            <tr>
+                <th scope="row">{{sum @index 1}}</th>
+                <td>
+                    <a href="/tasks/{{this.slug}}" style="color: black;">
+                        {{this.title}}
+                    </a>
+                </td>
+                <td>{{this.tagId.category}}</td>
+                <td>{{convertPriority this.priority}}</td>
+                <td>{{formatDate this.dueDate}}</td>
+                <td>{{this.status}}</td>
+                <td>
+                    <a href="" class="btn btn-success" data-toggle="modal" data-id={{this._id}}
+                        data-target="#complete-task-modal">Hoàn thành</a>
+                </td>
+                <td>
+                    <a href="/tasks/{{this._id}}/edit" class="btn btn-primary">Sửa</a>
+                </td>
+                <td>
+                    <a href="" class="btn btn-danger" data-toggle="modal" data-id={{this._id}}
+                        data-target="#delete-task-modal">Xóa</a>
+                </td>
+            </tr>
+            {{else}}
+            <tr>
+                <td colspan="9" class="text-center">
+                    Danh sách nhiệm vụ trống.
+                    <a href="/tasks/create">Thêm nhiệm vụ</a>
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+    {{#if isEmpty}}
+    <a class="btn btn-primary mt-4" href="/me/mylist">Xem thêm</a>
+    {{/if}}
+</div>
+{{else}}
+<div class="mt-5" style="text-align: center;">
+    <h2>Chào mừng bạn đến với ToDo Note !!!</h2>
+    <img class="anh-nen" src="https://i.pinimg.com/564x/ca/59/a6/ca59a6071fb2dcf2e3a5f47432c21452.jpg" alt="Ảnh nền ToDo Note"
+        style="display: block; margin: 0 auto; max-width: 350px; height: auto;">
+        <p>Đăng nhập để bắt đầu ghi chú của bạn.</p>
+</div>
+{{/if}}
+
+{{!-- Confirm Delete --}}
+<div id="delete-task-modal" class="modal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Xóa nhiệm vụ</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Bạn có chắn chắn muốn xóa không ?</p>
+            </div>
+            <div class="modal-footer">
+                <button id="btn-delete-task" type="button" class="btn btn-danger">Xóa bỏ</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{!-- Confirm Complte --}}
+<div id="complete-task-modal" class="modal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Hoàn thành nhiệm vụ</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Xác nhận đã hoàn thành nhiệm vụ ?</p>
+            </div>
+            <div class="modal-footer">
+                <button id="btn-complete-task" type="button" class="btn btn-success">Xác nhận</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{!-- Delete-form --}}
+<form name="delete-form" method="POST"></form>
+{{!-- Complete-form --}}
+<form name="complete-form" method="POST"></form>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var taskId;
+        var deleteForm = document.forms['delete-form'];
+        var btnDeleteTask = document.getElementById('btn-delete-task');
+        var completeForm = document.forms['complete-form'];
+        var btnCompleteTask = document.getElementById('btn-complete-task');
+
+        //When delete click
+        $('#delete-task-modal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            taskId = button.data('id');
+        });
+
+        //When delete-btn confirm click
+        btnDeleteTask.onclick = function () {
+            deleteForm.action = '/tasks/' + taskId + '?_method=DELETE';
+            deleteForm.submit();
+        };
+
+        //When complete click
+        $('#complete-task-modal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            taskId = button.data('id');
+        });
+
+        //When complete-btn comfirm click
+        btnCompleteTask.onclick = function () {
+            completeForm.action = '/tasks/' + taskId + '/completed?_method=PATCH';
+            completeForm.submit();
+        };
+    });
+</script>

@@ -1,0 +1,49 @@
+<div class="mt-4">
+
+    <h3>Thêm một công việc</h3>
+
+    <form method="POST" action="/tasks/save-list">
+        <div class="form-group">
+            <label for="title">Tiêu đề</label>
+            <input type="text" class="form-control" id="title" name="title" placeholder="Tên tiêu đề nên ít hơn 25 ký tự" required>
+        </div>
+        <div class="form-group">
+            <label for="description">Mô tả</label>
+            <textarea class="form-control" id="description" name="description"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="priority">Mức độ ưu tiên</label>
+            <select class="custom-select custom-select-sm" id="priority" name="priority" required>
+                <option value="">Tùy chọn</option>
+                <option value="3">Cao</option>
+                <option value="2">Vừa</option>
+                <option value="1">Thấp</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="tagId">Phân loại danh mục</label>
+            <select class="custom-select custom-select-sm select-tag" id="tagId" name="tagId" required>
+                <option value="">Chọn danh mục</option>
+                {{#each tags}}
+                <option value="{{this._id}}">{{this.category}}</option>
+                {{/each}}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="dueDate">Ngày tới hạn</label>
+            <input type="text" class="form-control" id="dueDate" name="dueDate" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Thêm mới</button>
+    </form>
+
+</div>
+
+{{!-- Lịch --}}
+<script>
+    flatpickr("#dueDate", {
+        enableTime: true,
+        dateFormat: "H:i d-m-Y",
+        minDate: "today",
+        time_24hr: true,
+    });
+</script>
