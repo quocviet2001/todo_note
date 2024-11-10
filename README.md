@@ -11,10 +11,13 @@ Một website quản lý công việc trực tuyến được xây dựng theo m
 ## Công nghệ sử dụng
 - Ngôn ngữ lập trình JavaScript, Framework Express, MongoDBCompass.
 - Frontend: Handlebars, Bootstrap.
-### Cách sử dụng:
+## Cách sử dụng:
 1. **Clone repository**: Lệnh này sao chép toàn bộ mã nguồn của dự án về máy tính của bạn từ GitHub.
 
          git clone https://github.com/quocviet2001/todo_note.git
-3. **Cài đặt các phụ thuộc**: `npm install` sẽ cài đặt các thư viện cần thiết mà dự án của bạn sử dụng.
-4. **Cấu hình `.env`**: Bạn cần tạo một tệp `.env` để cấu hình các thông số như kết nối đến cơ sở dữ liệu MongoDB và một bí mật cho session.
+2. **Cài đặt các phụ thuộc**: `npm install` sẽ cài đặt các thư viện cần thiết mà dự án của bạn sử dụng.
+3. **Cấu hình `.env`**: Bạn cần tạo một tệp `.env` để cấu hình các thông số như kết nối đến cơ sở dữ liệu MongoDB và khóa bí mật cho session.
+   
+         git clone https://github.com/quocviet2001/todo_note.git
+         
 5. **Chạy ứng dụng**: `npm start` sẽ khởi động ứng dụng và bạn có thể truy cập ứng dụng của mình trên `localhost`.
