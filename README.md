@@ -13,8 +13,7 @@ Một website quản lý công việc trực tuyến được xây dựng theo m
 - Frontend: Handlebars, Bootstrap.
 ### Cách sử dụng:
 1. **Clone repository**: Lệnh này sao chép toàn bộ mã nguồn của dự án về máy tính của bạn từ GitHub.
-   ```bash
-git clone https://github.com/tennguoidung/todolist.git
+   ```bash git clone https://github.com/tennguoidung/todolist.git
 2. **Cài đặt các phụ thuộc**: `npm install` sẽ cài đặt các thư viện cần thiết mà dự án của bạn sử dụng.
 3. **Cấu hình `.env`**: Bạn cần tạo một tệp `.env` để cấu hình các thông số như kết nối đến cơ sở dữ liệu MongoDB và một bí mật cho session.
 4. **Chạy ứng dụng**: `npm start` sẽ khởi động ứng dụng và bạn có thể truy cập ứng dụng của mình trên `localhost`.
