@@ -11,13 +11,6 @@ Một website quản lý công việc trực tuyến được xây dựng theo m
 ## Công nghệ sử dụng
 - Ngôn ngữ lập trình JavaScript, Framework Express, MongoDBCompass.
 - Frontend: Handlebars, Bootstrap.
-
-## Cài đặt
-1. Clone repository về máy tính của bạn:
-   git clone https://github.com/tennguoidung/todolist.git
-2. Cài đặt các phụ thuộc:
-   cd todolist
-   npm install
 ### Cách sử dụng:
 1. **Clone repository**: Lệnh này sao chép toàn bộ mã nguồn của dự án về máy tính của bạn từ GitHub.
 2. **Cài đặt các phụ thuộc**: `npm install` sẽ cài đặt các thư viện cần thiết mà dự án của bạn sử dụng.
