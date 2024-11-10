@@ -20,4 +20,5 @@ Một website quản lý công việc trực tuyến được xây dựng theo m
    
          git clone https://github.com/quocviet2001/todo_note.git
          
-5. **Chạy ứng dụng**: `npm start` sẽ khởi động ứng dụng và bạn có thể truy cập ứng dụng của mình trên `localhost`.
+4. **Chạy ứng dụng**: `npm start` sẽ khởi động ứng dụng và `npm run watch` sẽ khởi động file css cho ứng dụng.
+5. Truy cập ứng dụng qua trình duyệt tại http://localhost:3000.
