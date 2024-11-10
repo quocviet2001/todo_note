@@ -8,4 +8,6 @@ Một website quản lý công việc trực tuyến được xây dựng theo m
 - **Lịch sử nhiệm vụ**: Có thể xem lại những nhiệm vụ đã hoàn thành.
 - **Quản lý tài khoản**: Cho phép cập nhật thông tin cá nhân; thay đổi mật khẩu, ảnh đại diện.
 - **Xác thực, Phân quyền**: Hỗ trợ đăng ký và đăng nhập tài khoản; bảo mật thông tin cá nhân, đảm bảo quyền truy cập hợp lệ vào các chức năng và dữ liệu của người dùng.
-
+## Công nghệ sử dụng
+- Ngôn ngữ lập trình JavaScript, Framework Express, MongoDBCompass.
+- Frontend: Handlebars, Bootstrap.
