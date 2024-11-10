@@ -20,5 +20,6 @@ Một website quản lý công việc trực tuyến được xây dựng theo m
    
          MONGO_URI=your_mongo_database_url
          SESSION_SECRET=your_session_secret
-5. **Chạy ứng dụng**: `npm start` sẽ khởi động ứng dụng và `npm run watch` sẽ khởi động file css cho ứng dụng.
+4. **Chạy ứng dụng**: `npm start` sẽ khởi động ứng dụng và `npm run watch` sẽ khởi động file css cho ứng dụng.
+   Lưu ý: Bạn phải chạy song song 2 lệnh này trên Terminal.
 6. Truy cập ứng dụng qua trình duyệt tại `http://localhost:3000/todo-note`.
